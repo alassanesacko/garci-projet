@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block title %}Résultats de recherche{% endblock %}
+{% block content %}
+<h2>Résultats de la recherche de trajets</h2>
+{% if results %}
+    <table>
+        <thead>
+            <tr>
+                <th>Départ</th>
+                <th>Arrivée</th>
+                <th>Date</th>
+                <th>Heure</th>
+                <th>Bus</th>
+                <th>Prix</th>
+                <th>Réserver</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for departure in results %}
+            <tr>
+                <td>{{ departure.trip.origin }}</td>
+                <td>{{ departure.trip.destination }}</td>
+                <td>{{ departure.date }}</td>
+                <td>{{ departure.time|time:'H:i' }}</td>
+                <td>{{ departure.bus }}</td>
+                <td>{{ departure.trip.price }} FCFA</td>
+                <td><a href="{% url 'reservations:reserve' departure.id %}">Réserver</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>Aucun trajet trouvé pour votre recherche.</p>
+{% endif %}
+<a href="{% url 'trips:home' %}">Retour à l'accueil</a>
+{% endblock %}

@@ -1,0 +1,86 @@
+    {% load static %}
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>GareCI - {% block title %}Accueil{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+    <script src="{% static 'js/dashboard.js' %}" defer></script>
+</head>
+<body>
+
+     <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">
+                <i class="fas fa-bus"></i>
+                <h1>Gare<span>CI</span> Admin</h1>
+            </div>
+            <header>
+                <nav class="sidebar-nav">
+                    <div class="nav-section">
+                        <h3>Gestion</h3>
+                        <ul>
+
+                            {% if user.is_authenticated %}
+                                {% if user.is_staff %}
+                                  <!-- Tableau de bord pour les utilisateurs admin -->
+                                    <li class="active"><a href="{% url 'dashboard:index' %}"><i class="fas fa-tachometer-alt"></i> Tableau de bord</a></li>
+                                    <!-- Gestion des bus et trajets pour l'admin -->
+                                    <li><a href="{% url 'dashboard:bus_list' %}">Gestion des bus</a></li>
+                                    <li><a href="{% url 'dashboard:trip_list' %}"> Gestion des trajets</a></li>
+                                    <li><a href="{% url 'dashboard:reservation_list' %}">Réservations</a></li>
+                                    <li><a href="{% url 'dashboard:departure_list' %}">Départs</a></li>
+                                    <li><a href="{% url 'dashboard:category_list' %}">Catégories</a></li>
+                                    <li><a href="{% url 'dashboard:message_list' %}">Messages</a></li>
+                                            
+                                {% else %}
+                                    <!-- Menu réservé aux utilisateurs classiques -->
+                                    <li><a href="{% url 'reservations:list' %}"><i class="fas fa-ticket-alt"></i> Mes Réservations</a></li>
+                                    <li><a href="{% url 'reservations:messages' %}"><i class="fas fa-comment-dots"></i> Mes Messages</a></li>
+                                {% endif %}
+                                
+                                <!-- Déconnexion pour les utilisateurs authentifiés -->
+                                <li>
+                                    <form action="{% url 'accounts:logout' %}" method="post" style="display:inline;">
+                                        {% csrf_token %}
+                                        <button type="submit" style="background:none;border:none;padding:0;color:#007bff;cursor:pointer;">
+                                            <i class="fas fa-sign-out-alt"></i> Déconnexion
+                                        </button>
+                                    </form>
+                                </li>
+                            {% else %}
+                                <!-- Connexion et inscription pour les utilisateurs non authentifiés -->
+                                <li><a href="{% url 'accounts:login' %}"><i class="fas fa-sign-in-alt"></i> Connexion</a></li>
+                                <li><a href="{% url 'accounts:register' %}"><i class="fas fa-user-plus"></i> Inscription</a></li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                    
+                    {% if user.is_authenticated and user.is_staff %}
+                    <!-- Section Administration uniquement pour les administrateurs -->
+                    <div class="nav-section">
+                        <h3>Administration</h3>
+                        <ul>
+                            <li><a href=""><i class="fas fa-users-cog"></i> Personnel</a></li>
+                            <li><a href=""><i class="fas fa-chart-bar"></i> Rapports</a></li>
+                            <li><a href=""><i class="fas fa-cog"></i> Paramètres</a></li>
+
+                        </ul>
+                    </div>
+                    {% endif %}
+                </nav>
+            </header>
+        </aside>
+    <main>
+        {% block content %}
+        <!-- Contenu de la page -->
+        {% endblock %}
+    </main>
+
+<!--  <footer>
+        <p>&copy; 2025 GareCI. Tous droits réservés.</p>
+    </footer> -->
+</body>
+</html>

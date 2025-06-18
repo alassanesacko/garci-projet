@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% block title %}Accueil{% endblock %}
+
+{% block content %}
+    <section id="about">
+        <h2>À propos de GareCI</h2>
+        <p>Bienvenue sur GareCI, votre plateforme de gestion de réservation de trajets en autobus en Côte d'Ivoire. Nous facilitons vos déplacements interurbains en toute simplicité.</p>
+    </section>
+
+    <section id="search">
+        <h2>Rechercher un trajet</h2>
+        <form method="get" action="{% url 'trips:search_results' %}">
+            <label for="origin">Ville de départ:</label>
+            <input type="text" id="origin" name="origin">
+
+            <label for="destination">Ville d'arrivée:</label>
+            <input type="text" id="destination" name="destination">
+
+            <label for="date">Date:</label>
+            <input type="date" id="date" name="date">
+
+            <button type="submit">Rechercher</button>
+        </form>
+    </section>
+
+    <section id="departures">
+        <h2>Départs disponibles</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Ville de départ</th>
+                    <th>Ville d'arrivée</th>
+                    <th>Date</th>
+                    <th>Heure</th>
+                    <th>Bus</th>
+                    <th>Prix</th>
+                    <th>Réserver</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for departure in departures %}
+                <tr>
+                    <td>{{ departure.trip.origin }}</td>
+                    <td>{{ departure.trip.destination }}</td>
+                    <td>{{ departure.date }}</td>
+                    <td>{{ departure.time|time:'H:i' }}</td>
+                    <td>{{ departure.bus }}</td>
+                    <td>{{ departure.trip.price }} FCFA</td>
+                    <td>
+                        <a href="{% url 'reservations:reserve' departure.id %}">Réserver</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="7">Aucun départ disponible actuellement.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </section>
+
+    <section id="contact">
+        <h2>Contact</h2>        <p>Pour toute question ou assistance, contactez-nous :</p>
+        <p>Email : <a href="mailto:karimbamba595@gmail.com"> contact@gareci.ci</a></p>
+        <p>Téléphone : +225 00 00 00 00</p>
+        <p>Adresse : 123 Rue de la Gare, Abidjan, Côte d'Ivoire</p>
+        <form method="post" action="">
+            {% csrf_token %}
+            {{ contact_form.as_p }}
+            <button type="submit">Envoyer un message</button>
+        </form>
+    </section>
+{% endblock %}
+

@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block title %}Mes Réservations{% endblock %}
+
+{% block content %}
+    <h2>Mes Réservations</h2>
+    {% if user.is_authenticated %}
+        {% if reservations %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Trajet</th>
+                        <th>Date</th>
+                        <th>Heure</th>
+                        <th>Bus</th>
+                        <th>Prix</th>
+                        <th>Statut</th>
+                        <th>Réservé le</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for reservation in reservations %}
+                    <tr>
+                        <td>{{ reservation.departure.trip.origin }} → {{ reservation.departure.trip.destination }}</td>
+                        <td>{{ reservation.departure.date }}</td>
+                        <td>{{ reservation.departure.time|time:'H:i' }}</td>
+                        <td>{{ reservation.departure.bus }}</td>
+                        <td>{{ reservation.departure.trip.price }} FCFA</td>
+                        <td>
+                            {% if reservation.status == 'P' %}En attente{% elif reservation.status == 'C' %}Confirmée{% elif reservation.status == 'X' %}Annulée{% endif %}
+                        </td>
+                        <td>{{ reservation.booked_at|date:'d/m/Y H:i' }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>Vous n'avez aucune réservation pour le moment.</p>
+        {% endif %}
+    {% else %}
+        <p>Vous devez <a href="{% url 'accounts:login' %}">vous connecter</a> pour voir vos réservations.</p>
+    {% endif %}
+{% endblock %}

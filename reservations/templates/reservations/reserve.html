@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block title %}Confirmation de réservation{% endblock %}
+
+{% block content %}
+<h2>Confirmation de réservation</h2>
+<p>Vous êtes sur le point de réserver le départ suivant :</p>
+<ul>
+    <li><strong>Trajet :</strong> {{ departure.trip.origin }} → {{ departure.trip.destination }}</li>
+    <li><strong>Date :</strong> {{ departure.date }}</li>
+    <li><strong>Heure :</strong> {{ departure.time|time:'H:i' }}</li>
+    <li><strong>Bus :</strong> {{ departure.bus }}</li>
+    <li><strong>Prix :</strong> {{ departure.trip.price }} FCFA</li>
+</ul>
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">Confirmer la réservation</button>
+    <a href="/">Annuler</a>
+</form>
+{% endblock %}
