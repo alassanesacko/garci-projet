@@ -6,11 +6,12 @@
     <meta charset="UTF-8">
     <title>GareCI - {% block title %}Accueil{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="{% static 'js/dashboard.js' %}" defer></script>
 </head>
 <body>
 
-     <div class="dashboard-container">
+    <div class="dashboard-container">
         <!-- Sidebar -->
         <aside class="sidebar">
             <div class="logo">
@@ -41,15 +42,7 @@
                                     <li><a href="{% url 'reservations:messages' %}"><i class="fas fa-comment-dots"></i> Mes Messages</a></li>
                                 {% endif %}
                                 
-                                <!-- Déconnexion pour les utilisateurs authentifiés -->
-                                <li>
-                                    <form action="{% url 'accounts:logout' %}" method="post" style="display:inline;">
-                                        {% csrf_token %}
-                                        <button type="submit" style="background:none;border:none;padding:0;color:#007bff;cursor:pointer;">
-                                            <i class="fas fa-sign-out-alt"></i> Déconnexion
-                                        </button>
-                                    </form>
-                                </li>
+                            
                             {% else %}
                                 <!-- Connexion et inscription pour les utilisateurs non authentifiés -->
                                 <li><a href="{% url 'accounts:login' %}"><i class="fas fa-sign-in-alt"></i> Connexion</a></li>
@@ -72,15 +65,34 @@
                     {% endif %}
                 </nav>
             </header>
+            {% if user.is_authenticated and user.is_staff %}
+             <div class="sidebar-footer">
+                <div class="user-profile">
+                    <div>
+                        <strong>Admin User</strong>
+                        <small>Super Administrateur</small>
+                        <a class="logout-btn">
+                            <form action="{% url 'accounts:logout' %}" method="post" style="display:inline;">
+                                {% csrf_token %}
+                                    <button class="logout-btn" type="submit" style="background:none;border:none;padding:0;cursor:pointer;margin-top:25px; font-size:25px;">
+                                        <i class="fas fa-sign-out-alt"></i> Déconnexion
+                                    </button>
+                            </form>
+                        </a>
+                    </div>
+            <!-- Déconnexion pour les utilisateurs authentifiés -->
+                 
+                </div>
+            {% endif %}
         </aside>
-    <main>
-        {% block content %}
-        <!-- Contenu de la page -->
-        {% endblock %}
-    </main>
+        <main class="main-content">
+            {% block content %}
+            <!-- Contenu de la page -->
+            {% endblock %}
+        </main>
 
-<!--  <footer>
-        <p>&copy; 2025 GareCI. Tous droits réservés.</p>
-    </footer> -->
+
+    </div>
+    
 </body>
 </html>

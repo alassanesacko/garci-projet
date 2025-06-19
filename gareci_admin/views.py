@@ -227,7 +227,7 @@ class DashboardView(StaffRequiredMixin, TemplateView):
                 departures_by_date[date_str] = departures_by_date[date_str][:2]
         context['departures_by_date'] = departures_by_date
         context['upcoming_trips'] = upcoming_departures.count()
-        context['date_range'] = [today + timedelta(days=x) for x in range(8)]
+        context['date_range'] = [today + timedelta(days=x) for x in range(1)]
         
         # Réservations récentes (10 dernières)
         recent_reservations = Reservation.objects.select_related(

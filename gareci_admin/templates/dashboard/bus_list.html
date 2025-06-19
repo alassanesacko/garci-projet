@@ -1,31 +1,40 @@
 {% extends 'base.html' %}
 {% block title %}Liste des bus{% endblock %}
 {% block content %}
-<h2>Liste des bus</h2>
-<table>
-    <thead>
-        <tr>
-            <th>Nom</th>
-            <th>Capacité</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for bus in object_list %}
-        <tr>
-            <td>{{ bus.name }}</td>
-            <td>{{ bus.capacity }}</td>
-            <td>
-                <a href="{% url 'dashboard:bus_edit' bus.pk %}">Modifier</a> |
-                <a href="{% url 'dashboard:bus_delete' bus.pk %}">Supprimer</a>
-            </td>
-        </tr>
-        {% empty %}
-        <tr>
-            <td colspan="3">Aucun bus enregistré.</td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
-<a href="{% url 'dashboard:bus_add' %}" class="btn">Ajouter un bus</a>
+
+<section class="table-section">
+                    <div class="section-header">
+                        <h3>Liste des bus</h3>
+                    </div>
+                    
+                    <div class="table-responsive">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Nom</th>
+                                    <th>Capacité</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for bus in object_list %}
+                                <tr>
+                                    <td>{{ bus.name }}</td>
+                                    <td>{{ bus.capacity }}</td>
+                                    <td>
+                                        <a href="{% url 'dashboard:bus_edit' bus.pk %}"class="action-btn btn btn-green">Modifier</a> 
+                                        <a href="{% url 'dashboard:bus_delete' bus.pk %}" class="action-btn btn btn-red">Supprimer</a>
+                                    </td>
+                                </tr>
+                                {% empty %}
+                                <tr>
+                                    <td colspan="3">Aucun bus enregistré.</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                        <a href="{% url 'dashboard:bus_add' %}" class="action-btn btn btn-outline">Ajouter un bus</a>
+                    </div>
+</section>
 {% endblock %}
+
