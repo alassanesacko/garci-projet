@@ -29,12 +29,12 @@
                                   <!-- Tableau de bord pour les utilisateurs admin -->
                                     <li class="active"><a href="{% url 'dashboard:index' %}"><i class="fas fa-tachometer-alt"></i> Tableau de bord</a></li>
                                     <!-- Gestion des bus et trajets pour l'admin -->
-                                    <li><a href="{% url 'dashboard:bus_list' %}">Gestion des bus</a></li>
-                                    <li><a href="{% url 'dashboard:trip_list' %}"> Gestion des trajets</a></li>
-                                    <li><a href="{% url 'dashboard:reservation_list' %}">Réservations</a></li>
-                                    <li><a href="{% url 'dashboard:departure_list' %}">Départs</a></li>
-                                    <li><a href="{% url 'dashboard:category_list' %}">Catégories</a></li>
-                                    <li><a href="{% url 'dashboard:message_list' %}">Messages</a></li>
+                                    <li><a href="{% url 'dashboard:bus_list' %}"><i class="fas fa-bus"></i> Gestion des bus</a></li>
+                                    <li><a href="{% url 'dashboard:trip_list' %}"> <i class="fas fa-route"></i>Gestion des trajets</a></li>
+                                    <li><a href="{% url 'dashboard:reservation_list' %}"><i class="fas fa-ticket-alt"></i> Réservations</a></li>
+                                    <li><a href="{% url 'dashboard:departure_list' %}"><i class="fas fa-bus"></i> Départs</a></li>
+                                    <li><a href="{% url 'dashboard:category_list' %}"><i class="fas fa-tags"></i>Catégories</a></li>
+                                    <li><a href="{% url 'dashboard:message_list' %}"><i class="fas fa-comment-dots"></i> Messages</a></li>
                                             
                                 {% else %}
                                     <!-- Menu réservé aux utilisateurs classiques -->
@@ -68,6 +68,7 @@
             {% if user.is_authenticated and user.is_staff %}
              <div class="sidebar-footer">
                 <div class="user-profile">
+                    <img src="https://randomuser.me/api/portraits/men/1.jpg" alt="Admin">
                     <div>
                         <strong>Admin User</strong>
                         <small>Super Administrateur</small>
