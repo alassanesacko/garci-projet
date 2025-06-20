@@ -1,20 +1,24 @@
 {% extends 'base.html' %}
 {% block title %}Répondre au message{% endblock %}
 {% block content %}
-<h2>Répondre au message de {{ object.name }}</h2>
-<p><strong>Email :</strong> {{ object.email }}</p>
-<p><strong>Message :</strong> {{ object.message }}</p>
-<p><strong>Date d'envoi :</strong> {{ object.submitted_at }}</p>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" class="btn btn-success">Envoyer la réponse</button>
-    <a href="{% url 'dashboard:message_list' %}" class="btn">Annuler</a>
-</form>
-{% if object.reply %}
-    <hr>
-    <h3>Réponse actuelle</h3>
-    <p>{{ object.reply }}</p>
-    <p><em>Envoyée le {{ object.replied_at }}</em></p>
-{% endif %}
+
+<div class="modal-content">
+
+    <h2 style="margin:10px;">Répondre au message de {{ object.name }}</h2>
+    <p><strong>Email :</strong> <em>{{ object.email }} </em></p>
+    <p><strong>Message :</strong> <em> {{ object.message }}</em> </p>
+    <p style="margin-bottom:15px;"><strong>Date d'envoi :</strong><em> {{ object.submitted_at }}</em></p>
+    <form method="post" class="form-group">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="action-btn btn btn-primary">Envoyer la réponse</button>
+        <a href="{% url 'dashboard:message_list' %}" class="action-btn btn btn-red">Annuler</a>
+    </form>
+    {% if object.reply %}
+        <hr>
+        <h3>Réponse actuelle</h3>
+        <p>{{ object.reply }}</p>
+        <p><em>Envoyée le {{ object.replied_at }}</em></p>
+    {% endif %}
+</div>
 {% endblock %}

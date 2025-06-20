@@ -527,6 +527,7 @@ body {
 .form-group {
     flex: 1;
     margin-bottom: 15px;
+    
 }
 
 .form-group label {
@@ -539,7 +540,7 @@ body {
 .form-group input,
 .form-group select,
 .form-group textarea {
-    width: 100%;
+    width: 70%;
     padding: 10px 15px;
     border: 1px solid var(--light-gray);
     border-radius: 5px;

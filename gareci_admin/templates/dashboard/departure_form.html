@@ -1,11 +1,15 @@
 {% extends 'base.html' %}
 {% block title %}Ajouter/Modifier un départ{% endblock %}
 {% block content %}
-<h2>{% if form.instance.pk %}Modifier{% else %}Ajouter{% endif %} un départ</h2>
-<form method="post">
+
+<div class="modal-content">
+
+<h2 style="margin:10px;">{% if form.instance.pk %}Modifier{% else %}Ajouter{% endif %} un départ</h2>
+<form method="post" class="form-group">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit" class="btn">Enregistrer</button>
+    <button type="submit" class="btn btn-primary">Enregistrer</button>
 </form>
-<a href="{% url 'dashboard:departure_list' %}">Retour à la liste des départs</a>
+<a href="{% url 'dashboard:departure_list' %}" class="btn btn-primary">Retour à la liste des départs</a>
+</div>
 {% endblock %}

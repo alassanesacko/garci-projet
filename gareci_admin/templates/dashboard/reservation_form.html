@@ -1,11 +1,14 @@
 {% extends 'base.html' %}
 {% block title %}Modifier une réservation{% endblock %}
 {% block content %}
-<h2>Modifier une réservation</h2>
-<form method="post">
+<div class="modal-content">
+
+<h2 style="margin:10px;">Modifier une réservation</h2>
+<form method="post"class="form-group">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit" class="btn">Enregistrer</button>
-    <a href="{% url 'dashboard:reservation_list' %}">Annuler</a>
+    <button type="submit" class="action-btn btn btn-primary">Enregistrer</button>
+    <a href="{% url 'dashboard:reservation_list' %}" class="action-btn btn btn-red"> Annuler </a>
 </form>
+</div>
 {% endblock %}
